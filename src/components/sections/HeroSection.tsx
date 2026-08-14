@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 export default function HeroSection() {
   return (
     <section className="section-container bg-hero" style={{ minHeight: '100vh', justifyContent: 'center' }}>
-      <div className="content-wrapper frame-border" style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)', backdropFilter: 'blur(5px)', padding: '4rem clamp(2rem, 8vw, 6rem)', maxWidth: '1100px', width: 'fit-content' }}>
+      <div className="content-wrapper frame-border hero-frame">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
