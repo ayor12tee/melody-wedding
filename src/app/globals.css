@@ -219,3 +219,82 @@ h1, h2, h3, h4, h5, h6 {
   background: linear-gradient(135deg, var(--color-beige) 0%, var(--color-earth-1) 100%);
   color: var(--color-text-dark);
 }
+
+/* --- NEELA HERO SECTION STYLES --- */
+.hero-section {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-background-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-title {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  color: #fff;
+  margin: 0;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.hero-title.light {
+  color: #fff;
+}
+
+.hero-subtitle {
+  font-family: var(--font-inter), sans-serif;
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-top: 10px;
+  color: #fff;
+}
+
+.hero-countdown {
+  font-family: var(--font-inter), sans-serif;
+  font-size: clamp(1.2rem, 4vw, 1.8rem);
+  font-weight: 300;
+  margin-top: 20px;
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+.hero-divider-top,
+.hero-divider-bottom {
+  width: 2px;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.5);
+  margin: 20px auto;
+}
+
+/* Slantiness at the bottom (Neela specific CSS trick) */
+.section-divider-bottom-1 {
+  padding-bottom: 130px !important; /* space for the slant */
+}
+
+.section-divider-bottom-1::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+  width: 0;
+  height: 0;
+  /* The trick: creating a triangle with borders */
+  border-width: 0 0 130px 100vw;
+  border-color: transparent transparent var(--color-bg-light);
+  border-style: solid;
+}
+
