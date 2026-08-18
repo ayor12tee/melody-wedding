@@ -1,6 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import CountdownTimer from '../ui/CountdownTimer';
 
 const sliderImages = [
   "/images/slider/bg1.jpg",
@@ -101,14 +102,14 @@ export default function HeroSection() {
             Are getting Married in
           </motion.div>
 
-          {/* Countdown Placeholder */}
+          {/* Countdown Timer */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.2, ease: "easeOut" }}
             className="hero-countdown"
           >
-            October 2026
+            <CountdownTimer targetDate="2026-10-17T10:00:00" />
           </motion.div>
         </div>
       </div>
