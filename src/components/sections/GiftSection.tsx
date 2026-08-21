@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { Copy, CheckCircle, Mail } from 'lucide-react';
 import { useState } from 'react';
 
+import CinematicText from '../ui/CinematicText';
+
 export default function GiftSection() {
   const [copiedAccount, setCopiedAccount] = useState<string | null>(null);
 
@@ -36,7 +38,18 @@ export default function GiftSection() {
           style={{ textAlign: 'center' }}
         >
           <h3 style={{ fontFamily: 'var(--font-rachelle)', fontSize: 'clamp(3.5rem, 12vw, 5rem)', color: 'var(--color-brown)', marginBottom: '-5px', fontWeight: 'normal', opacity: 0.8, lineHeight: '1' }}>Gift Registry</h3>
-          <h2 style={{ fontFamily: 'var(--font-playfair)', fontSize: 'clamp(1.8rem, 6vw, 3rem)', color: 'var(--color-text-dark)', marginBottom: '1.5rem', fontWeight: 400, marginTop: '10px' }}>Our Greatest Gift Is Your Presence</h2>
+          
+          <CinematicText 
+            text="Our Greatest Gift Is Your Presence"
+            className="shimmer-text"
+            style={{ 
+              fontFamily: 'var(--font-playfair)', 
+              fontSize: 'clamp(1.8rem, 6vw, 3rem)', 
+              marginBottom: '1.5rem', 
+              fontWeight: 400, 
+              marginTop: '10px' 
+            }}
+          />
           
           <div style={{ width: '60px', height: '1px', backgroundColor: 'var(--color-brown)', margin: '0 auto 2.5rem auto', opacity: 0.3 }}></div>
 

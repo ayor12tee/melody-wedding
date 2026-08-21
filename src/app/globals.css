@@ -379,3 +379,31 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Gold Shimmer Effect for Headings */
+@keyframes gold-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    to right,
+    var(--color-royal-blue) 20%,
+    var(--color-earth-1) 40%,
+    var(--color-beige) 50%,
+    var(--color-earth-1) 60%,
+    var(--color-royal-blue) 80%
+  );
+  background-size: 200% auto;
+  color: var(--color-royal-blue);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gold-shimmer 7s linear infinite;
+  display: inline-block;
+}
+

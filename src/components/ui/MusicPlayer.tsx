@@ -6,39 +6,59 @@ export default function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const togglePlay = () => {
+  const startPlaying = () => {
     if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        // Start quietly at volume 0
-        audioRef.current.volume = 0;
-        audioRef.current.play().catch(e => console.warn("Audio file missing or blocked:", e));
-        
-        // Grow dramatically over 10 seconds
+      audioRef.current.volume = 0;
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+        // Fade in over 10 seconds
         let vol = 0;
         const fadeInterval = setInterval(() => {
           if (vol < 1) {
             vol += 0.05;
-            // Cap it at 1
             if (vol > 1) vol = 1;
-            
             if (audioRef.current) {
               audioRef.current.volume = vol;
             }
           } else {
             clearInterval(fadeInterval);
           }
-        }, 500); // Increases volume every 500ms
+        }, 500);
+      }).catch(e => console.warn("Audio auto-play blocked by browser:", e));
+    }
+  };
+
+  const togglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        startPlaying();
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
   useEffect(() => {
-    // We can auto-play or handle initial load here if needed, 
-    // but browsers often block auto-play without user interaction.
-    // It's better to let the user click play.
+    // Attempt auto-play immediately
+    if (audioRef.current && !isPlaying) {
+      const promise = audioRef.current.play();
+      if (promise !== undefined) {
+        promise.then(() => {
+          // Autoplay worked!
+          setIsPlaying(true);
+        }).catch(() => {
+          // Auto-play was blocked. Wait for user interaction.
+          const handleFirstInteraction = () => {
+            if (!isPlaying) startPlaying();
+            document.removeEventListener('click', handleFirstInteraction);
+            document.removeEventListener('scroll', handleFirstInteraction);
+          };
+          document.addEventListener('click', handleFirstInteraction, { once: true });
+          document.addEventListener('scroll', handleFirstInteraction, { once: true });
+        });
+      }
+    }
   }, []);
 
   return (

@@ -1,5 +1,6 @@
 "use client";
 import { motion } from 'framer-motion';
+import CinematicText from '../ui/CinematicText';
 
 export default function EventDetails() {
   const columnStyle = {
@@ -62,8 +63,21 @@ export default function EventDetails() {
 
   return (
     <section id="events" style={{ backgroundColor: 'var(--color-bg-light)', padding: '6rem 1rem' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', backgroundColor: '#fff', boxShadow: '0 10px 40px rgba(0,0,0,0.03)', borderRadius: '8px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', backgroundColor: '#fff', boxShadow: '0 10px 40px rgba(0,0,0,0.03)', borderRadius: '8px', position: 'relative' }}>
         
+        <div style={{ width: '100%', textAlign: 'center', padding: '4rem 0 1rem' }}>
+          <CinematicText 
+            text="When & Where"
+            className="shimmer-text"
+            style={{ 
+              fontFamily: 'var(--font-rachelle)', 
+              fontSize: 'clamp(3.5rem, 10vw, 4.5rem)', 
+              fontWeight: 'normal', 
+              opacity: 0.9 
+            }}
+          />
+        </div>
+
         {/* Engagement */}
         <motion.div className="event-column" style={columnStyle} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <svg width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="var(--color-royal-blue)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '1.5rem' }}>

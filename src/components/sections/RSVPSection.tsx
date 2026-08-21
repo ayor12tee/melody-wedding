@@ -1,20 +1,36 @@
 "use client";
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import CinematicText from '../ui/CinematicText';
 
 export default function RSVPSection() {
   const [formData, setFormData] = useState({
     name: '',
     whatsapp: '',
     email: '',
-    event: 'Both',
+    event: '', // Empty string forces the user to select an option
     code: ''
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const eventOptions = [
+    { label: 'Both Engagement & Wedding', value: 'Both' },
+    { label: 'Engagement Only', value: 'Engagement' },
+    { label: 'Wedding Only', value: 'Wedding' }
+  ];
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.event) {
+      setErrorMsg('Please select which event you are attending.');
+      setStatus('error');
+      return;
+    }
+
     setStatus('loading');
     setErrorMsg('');
     
@@ -45,7 +61,7 @@ export default function RSVPSection() {
     border: '1px solid #f0f0f0',
     backgroundColor: '#fbfbfb',
     fontSize: '0.95rem',
-    color: '#555',
+    color: 'var(--color-royal-blue)',
     outline: 'none',
     fontFamily: 'inherit',
     transition: 'border-color 0.3s ease'
@@ -74,15 +90,17 @@ export default function RSVPSection() {
             padding: '4rem 2rem',
             textAlign: 'center'
           }}>
-            <h2 style={{ 
-              fontFamily: 'var(--font-playfair)', 
-              fontSize: '2.5rem', 
-              color: '#5a737d', /* A subtle blue/grey from the template */
-              marginBottom: '0.5rem',
-              fontWeight: 400
-            }}>
-              Register Your Invite
-            </h2>
+            
+            <CinematicText 
+              text="Register Your Invite"
+              className="shimmer-text"
+              style={{ 
+                fontFamily: 'var(--font-playfair)', 
+                fontSize: '2.5rem', 
+                marginBottom: '0.5rem',
+                fontWeight: 400
+              }}
+            />
             
             {/* Ornament Divider */}
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '3rem' }}>
@@ -94,7 +112,7 @@ export default function RSVPSection() {
 
             {status === 'success' ? (
               <div style={{ padding: '2rem', backgroundColor: '#f9fdfa', border: '1px solid #e2f0e6' }}>
-                <h3 style={{ color: '#5a737d', fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'var(--font-playfair)' }}>Registration Successful!</h3>
+                <h3 style={{ color: 'var(--color-royal-blue)', fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'var(--font-playfair)' }}>Registration Successful!</h3>
                 <p style={{ fontSize: '1.1rem', color: '#666' }}>Thank you, {formData.name}. We look forward to celebrating with you.</p>
               </div>
             ) : (
@@ -135,17 +153,72 @@ export default function RSVPSection() {
                   style={inputStyle}
                 />
 
-                <select 
-                  required
-                  value={formData.event}
-                  onChange={(e) => setFormData({...formData, event: e.target.value})}
-                  style={{...inputStyle, appearance: 'none', backgroundImage: 'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23999999%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right .7em top 50%', backgroundSize: '.65em auto'}}
-                >
-                  <option value="" disabled>Event Attending *</option>
-                  <option value="Both">Both Engagement & Wedding</option>
-                  <option value="Engagement">Engagement Only</option>
-                  <option value="Wedding">Wedding Only</option>
-                </select>
+                {/* Custom Event Dropdown */}
+                <div style={{ position: 'relative', marginBottom: '1.2rem' }}>
+                  <div 
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    style={{ 
+                      ...inputStyle, 
+                      cursor: 'pointer', 
+                      display: 'flex', 
+                      justifyContent: 'space-between', 
+                      alignItems: 'center',
+                      marginBottom: 0, 
+                      color: formData.event ? 'var(--color-royal-blue)' : '#999' 
+                    }}
+                  >
+                    <span>{formData.event ? eventOptions.find(o => o.value === formData.event)?.label : 'Event Attending *'}</span>
+                    <span style={{ 
+                      color: 'var(--color-brown)', 
+                      transform: isDropdownOpen ? 'rotate(180deg)' : 'none', 
+                      transition: 'transform 0.3s ease',
+                      fontSize: '0.8rem'
+                    }}>▼</span>
+                  </div>
+                  
+                  {isDropdownOpen && (
+                    <div
+                      style={{ 
+                        position: 'absolute', 
+                        top: '100%', 
+                        left: 0, 
+                        right: 0, 
+                        backgroundColor: 'white', 
+                        border: '1px solid #f0f0f0', 
+                        borderTop: 'none',
+                        zIndex: 10, 
+                        boxShadow: '0 10px 25px rgba(0,0,0,0.05)',
+                        maxHeight: '200px',
+                        overflowY: 'auto'
+                      }}
+                    >
+                      {eventOptions.map(opt => (
+                        <div 
+                          key={opt.value}
+                          onClick={() => { setFormData({...formData, event: opt.value}); setIsDropdownOpen(false); setErrorMsg(''); }}
+                          style={{ 
+                            padding: '0.9rem 1rem', 
+                            cursor: 'pointer', 
+                            transition: 'background-color 0.2s ease, color 0.2s ease', 
+                            color: formData.event === opt.value ? 'var(--color-royal-blue)' : '#555',
+                            backgroundColor: formData.event === opt.value ? '#fbfbfb' : 'transparent',
+                            fontSize: '0.95rem'
+                          }}
+                          onMouseOver={(e) => { 
+                            e.currentTarget.style.backgroundColor = 'var(--color-beige)'; 
+                            e.currentTarget.style.color = 'var(--color-brown)'; 
+                          }}
+                          onMouseOut={(e) => { 
+                            e.currentTarget.style.backgroundColor = formData.event === opt.value ? '#fbfbfb' : 'transparent'; 
+                            e.currentTarget.style.color = formData.event === opt.value ? 'var(--color-royal-blue)' : '#555'; 
+                          }}
+                        >
+                          {opt.label}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
 
                 {status === 'error' && (
                   <p style={{ color: '#d9534f', fontSize: '0.9rem', marginBottom: '1.2rem', textAlign: 'center' }}>
