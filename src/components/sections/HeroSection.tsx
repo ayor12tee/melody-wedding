@@ -56,7 +56,7 @@ export default function HeroSection() {
             className="hero-divider-top"
           />
 
-          <h1 className="hero-title light" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <h1 className="hero-title light flex flex-col md:flex-row items-center justify-center">
             <motion.span
               initial={{ x: 50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -70,9 +70,9 @@ export default function HeroSection() {
               initial={{ y: -30, opacity: 0, scale: 0.5 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+              className="my-4 md:my-0 md:mx-[5px]"
               style={{ 
                 display: 'inline-flex', 
-                margin: '0 5px', 
                 verticalAlign: 'middle', 
                 alignItems: 'center', 
                 filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.5))',
