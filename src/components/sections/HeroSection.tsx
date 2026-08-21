@@ -70,7 +70,7 @@ export default function HeroSection() {
               initial={{ y: -30, opacity: 0, scale: 0.5 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-              className="my-4 md:my-0 md:mx-[5px]"
+              className="my-[-20px] translate-x-[40px] md:translate-x-0 md:my-0 md:mx-[5px]"
               style={{ 
                 display: 'inline-flex', 
                 verticalAlign: 'middle', 
