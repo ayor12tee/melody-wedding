@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
+  const [showEnter, setShowEnter] = useState(false);
 
   // We rely on Framer Motion's onAnimationComplete to hide the preloader
   // so it ushers in the main page exactly when the snake animation finishes.
@@ -59,8 +60,8 @@ export default function Preloader() {
                   ease: "easeInOut",
                 }}
                 onAnimationComplete={() => {
-                  // Usher in the main page!
-                  setIsLoading(false);
+                  // Show the enter button instead of immediately fading out
+                  setShowEnter(true);
                 }}
               />
             </motion.svg>
@@ -83,6 +84,46 @@ export default function Preloader() {
               <small style={{ fontSize: "12pt" }}>&</small><br />
               Michael
             </motion.div>
+
+            <AnimatePresence>
+              {showEnter && (
+                <motion.button
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  onClick={() => setIsLoading(false)}
+                  style={{
+                    position: "absolute",
+                    top: "100%", 
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    marginTop: "2.5rem",
+                    padding: "12px 32px",
+                    backgroundColor: "transparent",
+                    border: "1px solid #8eaeba",
+                    color: "#8eaeba",
+                    fontFamily: "var(--font-inter), sans-serif",
+                    textTransform: "uppercase",
+                    letterSpacing: "3px",
+                    fontSize: "0.85rem",
+                    cursor: "pointer",
+                    borderRadius: "4px",
+                    transition: "all 0.3s ease",
+                    whiteSpace: "nowrap"
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.backgroundColor = "#8eaeba";
+                    e.currentTarget.style.color = "#fff";
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.backgroundColor = "transparent";
+                    e.currentTarget.style.color = "#8eaeba";
+                  }}
+                >
+                  Open Invitation
+                </motion.button>
+              )}
+            </AnimatePresence>
           </div>
         </motion.div>
       )}
