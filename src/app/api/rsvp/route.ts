@@ -26,9 +26,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'Invalid registration code.' }, { status: 400 });
     }
 
-    // Check for duplicate registration using WhatsApp number
+    // Sanitize WhatsApp number to just digits and plus sign for strict matching
+    const sanitizedWhatsapp = whatsapp.replace(/[^\d+]/g, '');
+
+    // Check for duplicate registration using sanitized WhatsApp number
     const guestsRef = collection(db, 'guests');
-    const duplicateQuery = query(guestsRef, where('whatsapp', '==', whatsapp));
+    const duplicateQuery = query(guestsRef, where('whatsapp', '==', sanitizedWhatsapp));
     const duplicateSnapshot = await getDocs(duplicateQuery);
 
     if (!duplicateSnapshot.empty) {
@@ -37,9 +40,9 @@ export async function POST(request: Request) {
 
     // Save guest registration directly
     await addDoc(collection(db, 'guests'), {
-      name,
-      whatsapp,
-      email: email || null,
+      name: name.trim(),
+      whatsapp: sanitizedWhatsapp,
+      email: email ? email.trim() : null,
       event,
       code: submittedCode,
       registeredAt: serverTimestamp()
