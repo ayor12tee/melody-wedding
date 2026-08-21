@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 
 // The three master codes you can share with guests. You can change these anytime!
 const MASTER_CODES = [
@@ -24,6 +24,15 @@ export async function POST(request: Request) {
     // Validate against our master codes
     if (!MASTER_CODES.includes(submittedCode)) {
       return NextResponse.json({ message: 'Invalid registration code.' }, { status: 400 });
+    }
+
+    // Check for duplicate registration using WhatsApp number
+    const guestsRef = collection(db, 'guests');
+    const duplicateQuery = query(guestsRef, where('whatsapp', '==', whatsapp));
+    const duplicateSnapshot = await getDocs(duplicateQuery);
+
+    if (!duplicateSnapshot.empty) {
+      return NextResponse.json({ message: 'This WhatsApp number is already registered for the event.' }, { status: 400 });
     }
 
     // Save guest registration directly

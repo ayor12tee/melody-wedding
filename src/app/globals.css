@@ -105,6 +105,14 @@ h1, h2, h3, h4, h5, h6 {
   gap: 2rem;
 }
 
+.desktop-only {
+  display: flex !important;
+}
+
+.mobile-only {
+  display: none !important;
+}
+
 .nav-link {
   font-size: 0.9rem;
   font-weight: 500;
@@ -224,9 +232,15 @@ h1, h2, h3, h4, h5, h6 {
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .navbar {
-    flex-direction: column;
-    padding: 1rem;
-    gap: 1rem;
+    padding: 1rem 1.5rem;
+  }
+  
+  .desktop-only {
+    display: none !important;
+  }
+  
+  .mobile-only {
+    display: block !important;
   }
   
   .nav-links {
@@ -337,12 +351,31 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   left: 0;
   bottom: 0;
-  z-index: 0;
+  z-index: 10;
   width: 0;
   height: 0;
   /* The trick: creating a triangle with borders */
   border-width: 0 0 130px 100vw;
   border-color: transparent transparent var(--color-bg-light);
   border-style: solid;
+}
+
+/* Event Details 3-Column Layout */
+.event-column {
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.event-column:last-child {
+  border-bottom: none;
+}
+
+@media (min-width: 992px) {
+  .event-column {
+    border-bottom: none;
+    border-right: 1px solid rgba(0,0,0,0.08);
+  }
+  .event-column:last-child {
+    border-right: none;
+  }
 }
 

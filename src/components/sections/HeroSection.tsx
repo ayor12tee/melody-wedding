@@ -21,16 +21,19 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="hero-section section-divider-bottom-1" id="hero" style={{ zIndex: 1 }}>
+    <section className="hero-section" id="hero" style={{ zIndex: 1 }}>
       {/* Background Slider */}
       <div className="hero-background-slider" style={{ zIndex: 0 }}>
         <AnimatePresence>
           <motion.div
             key={currentImageIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, scale: 1 }}
+            animate={{ opacity: 1, scale: 1.05 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
+            transition={{ 
+              opacity: { duration: 1.5, ease: "easeInOut" },
+              scale: { duration: 6, ease: "linear" }
+            }}
             style={{
               position: 'absolute',
               inset: 0,

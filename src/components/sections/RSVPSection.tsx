@@ -57,13 +57,15 @@ export default function RSVPSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
+          whileHover={{ y: -5, boxShadow: '0 25px 60px rgba(0,0,0,0.08)' }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           style={{
             backgroundColor: '#ffffff',
             boxShadow: '0 15px 50px rgba(0,0,0,0.06)',
             padding: '1.5rem',
-            position: 'relative'
+            position: 'relative',
+            transition: 'box-shadow 0.4s ease'
           }}
         >
           {/* Inner border wrapper */}
