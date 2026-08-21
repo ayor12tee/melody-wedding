@@ -40,7 +40,14 @@ export default function MusicPlayer() {
   };
 
   useEffect(() => {
-    // Attempt auto-play immediately
+    const handleEnter = () => {
+      if (!isPlaying) startPlaying();
+    };
+    
+    // Listen for the specific click event from the Preloader
+    window.addEventListener('enter-website', handleEnter);
+
+    // Attempt auto-play immediately as a fallback
     if (audioRef.current && !isPlaying) {
       const promise = audioRef.current.play();
       if (promise !== undefined) {
@@ -59,7 +66,9 @@ export default function MusicPlayer() {
         });
       }
     }
-  }, []);
+
+    return () => window.removeEventListener('enter-website', handleEnter);
+  }, [isPlaying]);
 
   return (
     <div style={{ position: 'fixed', bottom: '2rem', right: '2rem', zIndex: 50 }}>

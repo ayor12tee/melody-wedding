@@ -91,7 +91,11 @@ export default function Preloader() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8 }}
-                  onClick={() => setIsLoading(false)}
+                  onClick={() => {
+                    setIsLoading(false);
+                    // Dispatch custom event to reliably trigger music in production
+                    window.dispatchEvent(new CustomEvent('enter-website'));
+                  }}
                   style={{
                     position: "absolute",
                     top: "100%", 
