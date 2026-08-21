@@ -1,6 +1,13 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, updateDoc, addDoc, doc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+
+// The three master codes you can share with guests. You can change these anytime!
+const MASTER_CODES = [
+  'MELODY2026', // Code for Both Events
+  'ENGAGE26',   // Code for Engagement Only
+  'WEDDING26'   // Code for Wedding Only
+];
 
 export async function POST(request: Request) {
   try {
@@ -11,35 +18,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
     }
 
-    const codesRef = collection(db, 'codes');
-    const q = query(codesRef, where('code', '==', code));
-    const querySnapshot = await getDocs(q);
+    // Convert submitted code to uppercase and strip whitespace to ensure matching
+    const submittedCode = code.toUpperCase().trim();
 
-    if (querySnapshot.empty) {
+    // Validate against our master codes
+    if (!MASTER_CODES.includes(submittedCode)) {
       return NextResponse.json({ message: 'Invalid registration code.' }, { status: 400 });
     }
 
-    const codeDoc = querySnapshot.docs[0];
-    const codeData = codeDoc.data();
-
-    if (codeData.used) {
-      return NextResponse.json({ message: 'This registration code has already been used.' }, { status: 400 });
-    }
-
-    // Mark code as used
-    await updateDoc(doc(db, 'codes', codeDoc.id), {
-      used: true,
-      usedAt: serverTimestamp(),
-      usedBy: name
-    });
-
-    // Save guest registration
+    // Save guest registration directly
     await addDoc(collection(db, 'guests'), {
       name,
       whatsapp,
       email: email || null,
       event,
-      code,
+      code: submittedCode,
       registeredAt: serverTimestamp()
     });
 
