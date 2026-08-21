@@ -5,7 +5,25 @@ import { collection, getDocs, query } from 'firebase/firestore';
 
 export default function AdminDashboard() {
   const [guests, setGuests] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [error, setError] = useState(false);
+
+  // You can change this password to whatever you want!
+  const ADMIN_PASSWORD = "MelodyAdmin26";
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passwordInput === ADMIN_PASSWORD) {
+      setIsAuthenticated(true);
+      setLoading(true);
+      fetchDashboardData();
+    } else {
+      setError(true);
+      setPasswordInput('');
+    }
+  };
 
   const fetchDashboardData = async () => {
     try {
@@ -18,11 +36,31 @@ export default function AdminDashboard() {
     }
   };
 
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
+  if (!isAuthenticated) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+        <form onSubmit={handleLogin} style={{ backgroundColor: 'white', padding: '2.5rem', borderRadius: '8px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', textAlign: 'center', maxWidth: '400px', width: '100%' }}>
+          <h2 style={{ fontFamily: 'var(--font-playfair)', marginBottom: '1.5rem', color: 'var(--color-royal-blue)' }}>Admin Access</h2>
+          <input 
+            type="password" 
+            value={passwordInput}
+            onChange={(e) => { setPasswordInput(e.target.value); setError(false); }}
+            placeholder="Enter Admin Password"
+            style={{ width: '100%', padding: '0.8rem', marginBottom: '1rem', border: '1px solid #ddd', borderRadius: '4px', outline: 'none' }}
+          />
+          {error && <p style={{ color: '#d9534f', fontSize: '0.85rem', marginTop: '-0.5rem', marginBottom: '1rem' }}>Incorrect password.</p>}
+          <button 
+            type="submit" 
+            style={{ width: '100%', padding: '0.8rem', backgroundColor: 'var(--color-royal-blue)', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', textTransform: 'uppercase', letterSpacing: '1px' }}
+          >
+            Access Dashboard
+          </button>
+        </form>
+      </div>
+    );
+  }
 
-  if (loading) return <div>Loading dashboard...</div>;
+  if (loading) return <div style={{ textAlign: 'center', marginTop: '4rem' }}>Loading dashboard...</div>;
 
   const engagementGuests = guests.filter(g => g.event === 'Engagement' || g.event === 'Both').length;
   const weddingGuests = guests.filter(g => g.event === 'Wedding' || g.event === 'Both').length;
