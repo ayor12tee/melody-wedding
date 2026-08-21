@@ -62,7 +62,7 @@ export default function Footer() {
         {/* Highlighted Hashtag */}
         <h2 style={{ 
           fontFamily: 'var(--font-rachelle)', 
-          fontSize: '4rem', 
+          fontSize: 'clamp(2rem, 8vw, 4rem)', 
           marginBottom: '1.5rem', 
           fontWeight: 'normal',
           background: 'linear-gradient(to right, #F5F5DC, #C19A6B)', // Beige to Earth-2

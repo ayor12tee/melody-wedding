@@ -17,17 +17,17 @@ export default function FloatingNotesBackground() {
 
   if (!isClient) return null;
 
-  // Generate 12 random notes
-  const notes = Array.from({ length: 15 }).map((_, i) => ({
+  // Generate 10 random notes
+  const notes = Array.from({ length: 10 }).map((_, i) => ({
     id: i,
     type: noteTypes[i % noteTypes.length],
     left: `${Math.random() * 90 + 5}%`, // 5% to 95%
-    duration: 20 + Math.random() * 30, // 20-50 seconds to float up (very slow and relaxing)
-    delay: Math.random() * -30, // start at different times, some already halfway up
-    size: 25 + Math.random() * 35, // 25px to 60px
+    duration: 30 + Math.random() * 40, // 30-70 seconds (even slower)
+    delay: Math.random() * -40, // start at different times
+    size: 20 + Math.random() * 30, // 20px to 50px (slightly smaller)
     color: ['var(--color-earth-2)', 'var(--color-royal-blue)', 'var(--color-brown)'][i % 3],
     rotation: Math.random() * 360,
-    sway: Math.random() * 40 - 20 // -20px to 20px sway
+    sway: Math.random() * 30 - 15 // -15px to 15px sway
   }));
 
   const renderSVG = (type: string) => {
