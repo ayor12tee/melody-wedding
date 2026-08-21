@@ -56,7 +56,7 @@ export default function HeroSection() {
             className="hero-divider-top"
           />
 
-          <h1 className="hero-title light flex flex-col md:flex-row items-center justify-center">
+          <h1 className="hero-title light hero-names-container">
             <motion.span
               initial={{ x: 50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
@@ -70,17 +70,7 @@ export default function HeroSection() {
               initial={{ y: -30, opacity: 0, scale: 0.5 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-              className="my-[-20px] translate-x-[40px] md:translate-x-0 md:my-0 md:mx-[5px]"
-              style={{ 
-                display: 'inline-flex', 
-                verticalAlign: 'middle', 
-                alignItems: 'center', 
-                filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.5))',
-                width: '150px',
-                height: '150px',
-                overflow: 'visible',
-                zIndex: 10
-              }}
+              className="hero-ring-wrapper"
             >
               <img src="/images/wedding-rings.png" alt="Wedding Rings" style={{ width: '100%', height: '100%', objectFit: 'contain', transform: 'scale(1.6)' }} />
             </motion.div>

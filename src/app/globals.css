@@ -18,6 +18,46 @@
   font-style: normal;
 }
 
+.hero-names-container {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+@media (min-width: 768px) {
+  .hero-names-container {
+    flex-direction: row !important;
+  }
+}
+
+.hero-ring-wrapper {
+  display: inline-flex !important;
+  vertical-align: middle !important;
+  align-items: center !important;
+  justify-content: center !important;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.5)) !important;
+  width: 130px !important;
+  height: 130px !important;
+  overflow: visible !important;
+  z-index: 10 !important;
+  margin-top: -30px !important;
+  margin-bottom: -30px !important;
+  transform: translateX(45px) translateY(5px) !important;
+}
+
+@media (min-width: 768px) {
+  .hero-ring-wrapper {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+    transform: none !important;
+    width: 160px !important;
+    height: 160px !important;
+  }
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
