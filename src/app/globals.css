@@ -8,6 +8,14 @@
   
   --color-bg-light: #FAFAFA;
   --color-text-dark: #333333;
+  --font-rachelle: 'Rachelle', var(--font-great-vibes), cursive;
+}
+
+@font-face {
+  font-family: 'Rachelle';
+  src: url('/fonts/Rachelle.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {

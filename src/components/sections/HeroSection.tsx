@@ -56,30 +56,40 @@ export default function HeroSection() {
             className="hero-divider-top"
           />
 
-          <h1 className="hero-title light">
+          <h1 className="hero-title light" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <motion.span
               initial={{ x: 50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-              style={{ display: 'inline-block' }}
+              style={{ display: 'inline-block', fontFamily: 'var(--font-rachelle)', fontWeight: 'normal', fontSize: '1.2em' }}
             >
               Melody
             </motion.span>
             
-            <motion.small
-              initial={{ y: -30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+            <motion.div
+              initial={{ y: -30, opacity: 0, scale: 0.5 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-              style={{ display: 'inline-block', margin: '0 15px', fontStyle: 'italic', fontSize: '0.6em', verticalAlign: 'middle' }}
+              style={{ 
+                display: 'inline-flex', 
+                margin: '0 5px', 
+                verticalAlign: 'middle', 
+                alignItems: 'center', 
+                filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.5))',
+                width: '150px',
+                height: '150px',
+                overflow: 'visible',
+                zIndex: 10
+              }}
             >
-              &
-            </motion.small>
+              <img src="/images/wedding-rings.png" alt="Wedding Rings" style={{ width: '100%', height: '100%', objectFit: 'contain', transform: 'scale(1.6)' }} />
+            </motion.div>
             
             <motion.span
               initial={{ x: -50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-              style={{ display: 'inline-block' }}
+              style={{ display: 'inline-block', fontFamily: 'var(--font-rachelle)', fontWeight: 'normal', fontSize: '1.2em' }}
             >
               Michael
             </motion.span>
