@@ -11,7 +11,7 @@ export default function Footer() {
       transition: {
         duration: 5 + custom,
         repeat: Infinity,
-        ease: "easeInOut"
+        ease: "easeInOut" as const
       }
     })
   };
