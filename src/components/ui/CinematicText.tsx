@@ -11,7 +11,7 @@ interface CinematicTextProps {
 export default function CinematicText({ text, className = "", style = {}, delay = 0 }: CinematicTextProps) {
   const words = text.split(" ");
   
-  const container = {
+  const container: any = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -19,7 +19,7 @@ export default function CinematicText({ text, className = "", style = {}, delay 
     },
   };
 
-  const child = {
+  const child: any = {
     visible: {
       opacity: 1,
       y: 0,
