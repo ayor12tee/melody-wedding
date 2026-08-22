@@ -12,9 +12,9 @@ const MASTER_CODES = [
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, whatsapp, email, event, code } = body;
+    const { name, whatsapp, email, event, code, childrenCount } = body;
 
-    if (!name || !whatsapp || !event || !code) {
+    if (!name || !whatsapp || !event || !code || childrenCount === undefined) {
       return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
     }
 
@@ -53,6 +53,7 @@ export async function POST(request: Request) {
       whatsapp: sanitizedWhatsapp,
       email: email ? email.trim() : null,
       event,
+      childrenCount: parseInt(childrenCount, 10) || 0,
       code: submittedCode,
       registeredAt: serverTimestamp()
     });

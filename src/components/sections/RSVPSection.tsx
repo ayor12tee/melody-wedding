@@ -9,12 +9,14 @@ export default function RSVPSection() {
     whatsapp: '',
     email: '',
     event: '', // Empty string forces the user to select an option
+    childrenCount: '',
     code: ''
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isChildrenDropdownOpen, setIsChildrenDropdownOpen] = useState(false);
 
   const eventOptions = [
     { label: 'Both Engagement & Wedding', value: 'Both' },
@@ -22,11 +24,19 @@ export default function RSVPSection() {
     { label: 'Wedding Only', value: 'Wedding' }
   ];
 
+  const childrenOptions = [
+    { label: '0 Children', value: '0' },
+    { label: '1 Child', value: '1' },
+    { label: '2 Children', value: '2' },
+    { label: '3 Children', value: '3' },
+    { label: '4 Children', value: '4' }
+  ];
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.event) {
-      setErrorMsg('Please select which event you are attending.');
+    if (!formData.event || formData.childrenCount === '') {
+      setErrorMsg('Please select your event and number of children.');
       setStatus('error');
       return;
     }
@@ -220,6 +230,73 @@ export default function RSVPSection() {
                   )}
                 </div>
 
+                {/* Children Dropdown */}
+                <div style={{ position: 'relative', marginBottom: '1.2rem' }}>
+                  <div 
+                    onClick={() => setIsChildrenDropdownOpen(!isChildrenDropdownOpen)}
+                    style={{ 
+                      ...inputStyle, 
+                      cursor: 'pointer', 
+                      display: 'flex', 
+                      justifyContent: 'space-between', 
+                      alignItems: 'center',
+                      marginBottom: 0, 
+                      color: formData.childrenCount !== '' ? 'var(--color-royal-blue)' : '#999' 
+                    }}
+                  >
+                    <span>{formData.childrenCount !== '' ? childrenOptions.find(o => o.value === formData.childrenCount)?.label : 'Number of Children Attending *'}</span>
+                    <span style={{ 
+                      color: 'var(--color-brown)', 
+                      transform: isChildrenDropdownOpen ? 'rotate(180deg)' : 'none', 
+                      transition: 'transform 0.3s ease',
+                      fontSize: '0.8rem'
+                    }}>▼</span>
+                  </div>
+                  
+                  {isChildrenDropdownOpen && (
+                    <div
+                      style={{ 
+                        position: 'absolute', 
+                        top: '100%', 
+                        left: 0, 
+                        right: 0, 
+                        backgroundColor: 'white', 
+                        border: '1px solid #f0f0f0', 
+                        borderTop: 'none',
+                        zIndex: 10, 
+                        boxShadow: '0 10px 25px rgba(0,0,0,0.05)',
+                        maxHeight: '200px',
+                        overflowY: 'auto'
+                      }}
+                    >
+                      {childrenOptions.map(opt => (
+                        <div 
+                          key={opt.value}
+                          onClick={() => { setFormData({...formData, childrenCount: opt.value}); setIsChildrenDropdownOpen(false); setErrorMsg(''); }}
+                          style={{ 
+                            padding: '0.9rem 1rem', 
+                            cursor: 'pointer', 
+                            transition: 'background-color 0.2s ease, color 0.2s ease', 
+                            color: formData.childrenCount === opt.value ? 'var(--color-royal-blue)' : '#555',
+                            backgroundColor: formData.childrenCount === opt.value ? '#fbfbfb' : 'transparent',
+                            fontSize: '0.95rem'
+                          }}
+                          onMouseOver={(e) => { 
+                            e.currentTarget.style.backgroundColor = 'var(--color-beige)'; 
+                            e.currentTarget.style.color = 'var(--color-brown)'; 
+                          }}
+                          onMouseOut={(e) => { 
+                            e.currentTarget.style.backgroundColor = formData.childrenCount === opt.value ? '#fbfbfb' : 'transparent'; 
+                            e.currentTarget.style.color = formData.childrenCount === opt.value ? 'var(--color-royal-blue)' : '#555'; 
+                          }}
+                        >
+                          {opt.label}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
                 {status === 'error' && (
                   <p style={{ color: '#d9534f', fontSize: '0.9rem', marginBottom: '1.2rem', textAlign: 'center' }}>
                     {errorMsg}
@@ -266,7 +343,7 @@ export default function RSVPSection() {
                 </div>
                 
                 <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.8rem', color: '#999' }}>
-                  * Each invitation permits one person only.
+                  * Each invitation permits one adult only.
                 </p>
               </form>
             )}
