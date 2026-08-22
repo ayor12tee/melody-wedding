@@ -55,7 +55,7 @@ export default function GiftSection() {
 
           <div style={{ maxWidth: '750px', margin: '0 auto 4rem auto', fontSize: 'clamp(1.1rem, 4vw, 1.3rem)', lineHeight: '1.8', color: '#444', fontFamily: 'var(--font-playfair)' }}>
             <p style={{ marginBottom: '1.5rem' }}>Your presence as we celebrate this special chapter means more than we could ever ask for.</p>
-            <p>However, should you wish to honour us with a gift, we would be incredibly grateful for either a monetary gift or a gift card. No physical gifts are required.</p>
+            <p>However, should you wish to honour us with a gift, we would be incredibly grateful for either a monetary gift or a gift card. We would appreciate any of these instead of physical gifts, Thank you.</p>
           </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'center' }}>
@@ -66,18 +66,19 @@ export default function GiftSection() {
               whileHover={{ y: -8, boxShadow: '0 30px 60px rgba(0,35,102,0.06)' }}
             >
               <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '4px', backgroundColor: 'var(--color-royal-blue)' }}></div>
-              <h3 style={{ fontFamily: 'var(--font-playfair)', fontSize: '1.5rem', marginBottom: '2rem', color: 'var(--color-royal-blue)' }}>Michael Adebowale Taiwo</h3>
+              <h3 style={{ fontFamily: 'var(--font-playfair)', fontSize: '1.5rem', marginBottom: '0.5rem', color: 'var(--color-royal-blue)' }}>Michael Adebowale Taiwo</h3>
+              <p style={{ fontSize: '0.9rem', color: '#888', marginBottom: '2rem', fontFamily: 'var(--font-inter)' }}>Monzo Bank</p>
               
               <div style={{ marginBottom: '2.5rem', fontFamily: 'var(--font-inter)' }}>
                 <p style={{ fontSize: '0.85rem', color: '#888', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '0.4rem' }}>Sort Code</p>
-                <p style={{ fontSize: '1.3rem', color: 'var(--color-text-dark)', fontWeight: 500, marginBottom: '1.5rem' }}>04-00-75</p>
+                <p style={{ fontSize: '1.3rem', color: 'var(--color-text-dark)', fontWeight: 500, marginBottom: '1.5rem' }}>04-00-05</p>
                 
                 <p style={{ fontSize: '0.85rem', color: '#888', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '0.4rem' }}>Account Number</p>
-                <p style={{ fontSize: '1.8rem', color: 'var(--color-text-dark)', fontWeight: 300, letterSpacing: '3px' }}>70821054</p>
+                <p style={{ fontSize: '1.8rem', color: 'var(--color-text-dark)', fontWeight: 300, letterSpacing: '3px' }}>52111576</p>
               </div>
 
               <button 
-                onClick={() => copyToClipboard('70821054', 'michael')}
+                onClick={() => copyToClipboard('52111576', 'michael')}
                 style={{ 
                   width: '100%', padding: '1rem', border: '1px solid var(--color-royal-blue)', backgroundColor: copiedAccount === 'michael' ? 'var(--color-royal-blue)' : 'transparent', 
                   color: copiedAccount === 'michael' ? '#fff' : 'var(--color-royal-blue)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '2px', 

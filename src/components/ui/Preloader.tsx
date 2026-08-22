@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
   const [showEnter, setShowEnter] = useState(false);
+  const [isFizzing, setIsFizzing] = useState(false);
 
   // We rely on Framer Motion's onAnimationComplete to hide the preloader
   // so it ushers in the main page exactly when the snake animation finishes.
@@ -88,43 +89,94 @@ export default function Preloader() {
             <AnimatePresence>
               {showEnter && (
                 <motion.button
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ 
+                    opacity: 1, 
+                    y: 0,
+                    scale: [1, 1.03, 1]
+                  }}
+                  transition={{ 
+                    opacity: { duration: 0.8 },
+                    y: { duration: 0.8 },
+                    scale: { repeat: Infinity, duration: 2.5, ease: "easeInOut", delay: 0.8 } 
+                  }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: "0 15px 40px rgba(0, 35, 102, 0.5)",
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{ 
+                    scale: 0.9, 
+                    boxShadow: "0 2px 10px rgba(0, 35, 102, 0.2)",
+                    rotate: -1,
+                    transition: { duration: 0.1 }
+                  }}
                   onClick={() => {
-                    setIsLoading(false);
-                    // Dispatch custom event to reliably trigger music in production
+                    setIsFizzing(true);
+                    // Dispatch custom event to reliably trigger music immediately
                     window.dispatchEvent(new CustomEvent('enter-website'));
+                    // Delay hiding the preloader so the user sees the fizz explosion
+                    setTimeout(() => {
+                      setIsLoading(false);
+                    }, 500);
                   }}
                   style={{
                     position: "absolute",
                     top: "100%", 
                     left: "50%",
                     transform: "translateX(-50%)",
-                    marginTop: "2.5rem",
-                    padding: "12px 32px",
-                    backgroundColor: "transparent",
-                    border: "1px solid #8eaeba",
-                    color: "#8eaeba",
+                    marginTop: "3rem",
+                    padding: "14px 28px", 
+                    backgroundColor: "#FDFBF7", // Elegant warm ivory
+                    border: "1px solid rgba(0, 35, 102, 0.1)",
+                    color: "var(--color-royal-blue)",
                     fontFamily: "var(--font-inter), sans-serif",
                     textTransform: "uppercase",
-                    letterSpacing: "3px",
-                    fontSize: "0.85rem",
+                    letterSpacing: "2px", 
+                    fontSize: "0.8rem", 
+                    fontWeight: 600,
                     cursor: "pointer",
-                    borderRadius: "4px",
-                    transition: "all 0.3s ease",
-                    whiteSpace: "nowrap"
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.backgroundColor = "#8eaeba";
-                    e.currentTarget.style.color = "#fff";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.backgroundColor = "transparent";
-                    e.currentTarget.style.color = "#8eaeba";
+                    borderRadius: "40px",
+                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
+                    whiteSpace: "nowrap",
+                    maxWidth: "90vw" 
                   }}
                 >
-                  Open Invitation
+                  <span style={{ position: "relative", zIndex: 2 }}>Open Invitation</span>
+                  
+                  {/* Colorful Fizzy Sparkle Burst */}
+                  <AnimatePresence>
+                    {isFizzing && Array.from({ length: 30 }).map((_, i) => {
+                      const angle = Math.random() * Math.PI * 2;
+                      const distance = Math.random() * 80 + 40; 
+                      const colors = ['#D4AF37', '#8eaeba', 'var(--color-royal-blue)', '#b76e79', '#FFD700'];
+                      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                      return (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 1, scale: 0, x: "-50%", y: "-50%" }}
+                          animate={{ 
+                            opacity: 0, 
+                            scale: Math.random() * 2 + 0.5,
+                            x: `calc(-50% + ${Math.cos(angle) * distance}px)`,
+                            y: `calc(-50% + ${Math.sin(angle) * distance}px)`,
+                          }}
+                          transition={{ duration: 0.7, ease: "easeOut" }}
+                          style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            width: `${Math.random() * 6 + 4}px`,
+                            height: `${Math.random() * 6 + 4}px`,
+                            backgroundColor: randomColor,
+                            borderRadius: '50%',
+                            pointerEvents: 'none',
+                            zIndex: 1
+                          }}
+                        />
+                      );
+                    })}
+                  </AnimatePresence>
                 </motion.button>
               )}
             </AnimatePresence>

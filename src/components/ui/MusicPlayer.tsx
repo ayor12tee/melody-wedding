@@ -41,14 +41,16 @@ export default function MusicPlayer() {
 
   useEffect(() => {
     const handleEnter = () => {
-      if (!isPlaying) startPlaying();
+      if (audioRef.current && audioRef.current.paused) {
+        startPlaying();
+      }
     };
     
     // Listen for the specific click event from the Preloader
     window.addEventListener('enter-website', handleEnter);
 
     // Attempt auto-play immediately as a fallback
-    if (audioRef.current && !isPlaying) {
+    if (audioRef.current && audioRef.current.paused) {
       const promise = audioRef.current.play();
       if (promise !== undefined) {
         promise.then(() => {
@@ -57,7 +59,9 @@ export default function MusicPlayer() {
         }).catch(() => {
           // Auto-play was blocked. Wait for user interaction.
           const handleFirstInteraction = () => {
-            if (!isPlaying) startPlaying();
+            if (audioRef.current && audioRef.current.paused) {
+              startPlaying();
+            }
             document.removeEventListener('click', handleFirstInteraction);
             document.removeEventListener('scroll', handleFirstInteraction);
           };
@@ -68,7 +72,7 @@ export default function MusicPlayer() {
     }
 
     return () => window.removeEventListener('enter-website', handleEnter);
-  }, [isPlaying]);
+  }, []);
 
   return (
     <div style={{ position: 'fixed', bottom: '2rem', right: '2rem', zIndex: 50 }}>
