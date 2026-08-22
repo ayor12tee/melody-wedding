@@ -4,9 +4,9 @@ import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'fire
 
 // The three master codes you can share with guests. You can change these anytime!
 const MASTER_CODES = [
-  'MELODY2026', // Code for Both Events
-  'ENGAGE26',   // Code for Engagement Only
-  'WEDDING26'   // Code for Wedding Only
+  'MELMIK26',    // Code for Both Events
+  'GRACE4826',   // Code for Engagement Only
+  'MMWEDDING26'  // Code for Wedding Only
 ];
 
 export async function POST(request: Request) {
@@ -24,6 +24,15 @@ export async function POST(request: Request) {
     // Validate against our master codes
     if (!MASTER_CODES.includes(submittedCode)) {
       return NextResponse.json({ message: 'Invalid registration code.' }, { status: 400 });
+    }
+
+    // Validate that the guest is not trying to register for an event their code doesn't permit
+    if (submittedCode === 'MMWEDDING26' && event !== 'Wedding') {
+      return NextResponse.json({ message: 'Your code is only valid for the Wedding. Please select "Wedding Only".' }, { status: 400 });
+    }
+    
+    if (submittedCode === 'GRACE4826' && event !== 'Engagement') {
+      return NextResponse.json({ message: 'Your code is only valid for the Engagement. Please select "Engagement Only".' }, { status: 400 });
     }
 
     // Sanitize WhatsApp number to just digits and plus sign for strict matching
