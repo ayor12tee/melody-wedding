@@ -89,10 +89,11 @@ export default function Preloader() {
             <AnimatePresence>
               {showEnter && (
                 <motion.button
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 15, x: "-50%" }}
                   animate={{ 
                     opacity: 1, 
                     y: 0,
+                    x: "-50%",
                     scale: [1, 1.03, 1]
                   }}
                   transition={{ 
@@ -124,7 +125,6 @@ export default function Preloader() {
                     position: "absolute",
                     top: "100%", 
                     left: "50%",
-                    transform: "translateX(-50%)",
                     marginTop: "3rem",
                     padding: "14px 28px", 
                     backgroundColor: "#FDFBF7", // Elegant warm ivory
