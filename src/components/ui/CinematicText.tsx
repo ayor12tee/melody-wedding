@@ -23,7 +23,6 @@ export default function CinematicText({ text, className = "", style = {}, delay 
     visible: {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
       transition: {
         type: "spring",
         damping: 12,
@@ -33,7 +32,6 @@ export default function CinematicText({ text, className = "", style = {}, delay 
     hidden: {
       opacity: 0,
       y: 15,
-      filter: "blur(4px)",
     },
   };
 
