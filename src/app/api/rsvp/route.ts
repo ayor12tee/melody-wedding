@@ -65,8 +65,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ message: 'Success' }, { status: 200 });
     
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error processing RSVP:', error);
-    return NextResponse.json({ message: 'Internal server error. Please try again later.' }, { status: 500 });
+    return NextResponse.json({ message: 'Internal server error: ' + (error.message || 'Unknown error') }, { status: 500 });
   }
 }
