@@ -38,6 +38,11 @@ export async function POST(request: Request) {
     // Sanitize WhatsApp number to just digits and plus sign for strict matching
     const sanitizedWhatsapp = whatsapp.replace(/[^\d+]/g, '');
 
+    if (!db) {
+      console.error('Firebase DB is not initialized. Environment variables may be missing.');
+      return NextResponse.json({ message: 'Internal server error: Database not configured properly. Please check Vercel environment variables.' }, { status: 500 });
+    }
+
     // Check for duplicate registration using sanitized WhatsApp number
     const guestsRef = collection(db, 'guests');
     const duplicateQuery = query(guestsRef, where('whatsapp', '==', sanitizedWhatsapp));
